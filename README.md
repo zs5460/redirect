@@ -14,6 +14,16 @@ redirect is a redirector. Automatically bind domain names to HTTP and HTTPS, and
 
 * Add management interface, online management, effective immediately.
 
+## FAQ
+
+### How can I listen on ports 80 and 443? Do I have to run as root?
+
+On Linux, you can use setcap to grant your binary the permission to bind low ports:
+
+```shell
+sudo setcap cap_net_bind_service=+ep /path/to/your/binary
+```
+
 ## Licence
 
 Released under MIT license, see [LICENSE](LICENSE) for details.
