@@ -1,5 +1,8 @@
 language: go
 
+env:
+  - GO111MODULE=on
+
 before_deploy:
   - GOARCH=amd64 GOOS=linux   go build -o redirect
   - GOARCH=amd64 GOOS=windows go build -o redirect.exe
