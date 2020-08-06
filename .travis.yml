@@ -1,0 +1,15 @@
+language: go
+
+before_deploy:
+  - GOARCH=amd64 GOOS=linux   go build -o redirect
+  - GOARCH=amd64 GOOS=windows go build -o redirect.exe
+
+deploy:
+  provider: releases
+  api_key: "${GH_TOKEN}"
+  file: 
+    - redirect
+    - redirect.exe
+  skip_cleanup: true
+  on:
+    tags: true
