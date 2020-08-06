@@ -1,3 +1,7 @@
+// Copyright 2020 zs. All rights reserved.
+// Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
 package main
 
 import (
@@ -29,8 +33,8 @@ func main() {
 	mux := NewHandler(cfg.Sites)
 
 	domains := []string{}
-	for _, v := range cfg.Sites {
-		domains = append(domains, v.Domain)
+	for _, site := range cfg.Sites {
+		domains = append(domains, site.Domain)
 	}
 
 	err := certmagic.HTTPS(domains, mux)
@@ -40,13 +44,13 @@ func main() {
 }
 
 // NewHandler return a handler
-func NewHandler(s []site) http.Handler {
+func NewHandler(sites []site) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			host := r.Host
-			for _, v := range s {
-				if host == v.Domain {
-					http.Redirect(w, r, v.URL, 301)
+			for _, site := range sites {
+				if host == site.Domain {
+					http.Redirect(w, r, site.URL, 301)
 				}
 			}
 			w.Write([]byte("welcome!"))
