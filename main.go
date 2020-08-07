@@ -27,10 +27,10 @@ func main() {
 	my.MustLoadConfig("config.json", &cfg)
 	if len(cfg.Sites) == 0 {
 		fmt.Println("sites is empty!")
-		os.Exit(0)
+		os.Exit(1)
 	}
 
-	mux := NewHandler(cfg.Sites)
+	mux := newHandler(cfg.Sites)
 
 	domains := []string{}
 	for _, site := range cfg.Sites {
@@ -43,8 +43,7 @@ func main() {
 	}
 }
 
-// NewHandler return a handler
-func NewHandler(sites []site) http.Handler {
+func newHandler(sites []site) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			host := r.Host
