@@ -32,7 +32,7 @@ func main() {
 
 	mux := newHandler(cfg.Sites)
 
-	domains := []string{}
+	var domains []string
 	for _, site := range cfg.Sites {
 		domains = append(domains, site.Domain)
 	}
@@ -52,7 +52,6 @@ func newHandler(sites []site) http.Handler {
 					http.Redirect(w, r, site.URL, 301)
 				}
 			}
-			w.Write([]byte("welcome!"))
-		},
-	)
+			_, _ = w.Write([]byte("welcome!"))
+		})
 }
